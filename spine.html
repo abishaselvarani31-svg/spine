@@ -1,0 +1,803 @@
+ <DOCTYPEhtml>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinal AI Diagnosis</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#f42a99,#10d6e4);
+    background-size:400% 400%;
+    animation:gradientMove 10s ease infinite;
+    color:#fff;
+    scroll-behavior:smooth;
+}
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* HEADER */
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(10px);
+    z-index:1000;
+}
+header img{
+    height:50px;
+    border-radius:50%;
+}
+nav a{
+    color:white;
+    margin:0 12px;
+    text-decoration:none;
+    font-weight:bold;
+}
+nav a:hover{
+    color:#10d6e4;
+}
+
+/* LOGIN PAGE */
+.login-page{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#f42a99,#10d6e4);
+    backdrop-filter:blur(10px);
+}
+.login-card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(20px);
+    padding:40px;
+    width:350px;
+    border-radius:30px;
+    text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.5);
+    transform:perspective(800px) rotateY(0deg);
+    transition:transform 0.6s;
+}
+.login-card:hover{
+    transform:perspective(800px) rotateY(10deg);
+}
+.login-card img{
+    width:120px;
+    border-radius:20px;
+    margin-bottom:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+.login-card input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:30px;
+    border:none;
+}
+.login-card button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(90deg,#f42a99,#10d6e4);
+    color:white;
+    cursor:pointer;
+}
+.popup-btn{
+    margin-top:15px;
+    background:rgba(255,255,255,0.2);
+    border:none;
+    color:#fff;
+    padding:10px 20px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+/* MAIN CONTENT */
+#mainContent{
+    display:none;
+}
+section{
+    padding:120px 30px;
+    text-align:center;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    margin:20px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    transform:perspective(1000px) rotateX(0deg);
+    transition:transform 0.5s;
+}
+section:hover{
+    transform:perspective(1000px) rotateX(5deg);
+}
+
+/* HOME */
+#home{
+    background:rgba(255,255,255,0.15);
+}
+#home img{
+    width:250px;
+    border-radius:20px;
+    margin: 50px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    transition:transform 0.5s;
+}
+#home img:hover{
+    transform:scale(1.1) rotateY(10deg);
+}
+.back-btn{
+    margin-top:50px;
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:linear-gradient(90deg,#10d6e4,#f42a99);
+    color:white;
+    cursor:pointer;
+}
+
+/* UPLOAD SECTION */
+.cards{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+.upload-card{
+    width:250px;
+    padding:25px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#93e2e7,#f17abc);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.3);
+    transition:transform 0.4s ease, box-shadow 0.4s ease;
+}
+.upload-card:hover{
+    transform:translateY(-10px) rotateY(10deg);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.upload-card img{
+    width:100%;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+.upload-card input{
+    margin-top:10px;
+}
+.upload-card button{
+    margin-top:20px;
+    border:none;
+    border-radius:20px;
+    padding:10px 20px;
+    background:linear-gradient(90deg,#ec5dac,#75dee6);
+    color:white;
+    cursor:pointer;
+}
+
+/* DISEASE SECTION */
+.disease-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    margin-top:30px;
+}
+.disease{
+    background:linear-gradient(135deg,#ec5dac,#75dee6);
+    padding:20px;
+    border-radius:15px;
+    text-align:left;
+    color:white;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    transform:perspective(800px) rotateY(0deg);
+    transition:transform 0.5s;
+}
+.disease:hover{
+    transform:perspective(800px) rotateY(10deg);
+}
+.disease img{
+    width:100%;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+/* ABOUT & CONTACT */
+.about{
+    background:rgba(210, 236, 240, 0.1);
+    color:#0c0b0b;
+    font-weight:bold;
+}
+.contact{
+    background:linear-gradient(135deg,#82e7ee,#e07bb3);
+    color:#131212;
+    font-weight:bold;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    background:rgba(0,0,0,0.6);
+}
+/* PAGE BACKGROUNDS */
+
+#home{
+     background:
+    linear-gradient(270deg,
+        rgba(220, 248, 248, 0.6),
+        rgba(231, 186, 236, 0.6),
+        rgba(240, 173, 231, 0.6)
+    ),
+    url("https://www.impactqa.com/wp-content/uploads/2022/02/Artificial-Intelligence-AI-and-its-Assistance-in-Medical-Diagnosis-Blog.png");
+    
+    background-size: 400% 400%, cover;
+    background-position: 0% 50%, center;
+    background-repeat: no-repeat;
+    animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove{
+    0%{ background-position: 0% 50%, center; }
+    50%{ background-position: 100% 50%, center; }
+    100%{ background-position: 0% 50%, center; }
+}
+
+#upload{
+    background:
+    linear-gradient(270deg,
+        rgba(220, 248, 248, 0.6),
+        rgba(231, 186, 236, 0.6),
+        rgba(240, 173, 231, 0.6)
+    ),
+    url("https://chdcityhospital.com/wp-content/uploads/2023/06/Spine-scaled-1-1536x1024.jpg");
+
+    background-size: 400% 400%, cover;
+    background-position: 0% 50%, center;
+    background-repeat: no-repeat;
+
+    animation: uploadGradient 8s ease infinite;
+}
+@keyframes uploadGradient{
+    0%{ background-position: 0% 50%, center; }
+    50%{ background-position: 100% 50%, center; }
+    100%{ background-position: 0% 50%, center; }
+}
+
+/* DISEASES PAGE */
+#diseases{
+    background:
+    linear-gradient(270deg, rgba(142, 216, 235, 0.6), rgba(231, 135, 218, 0.6), rgba(190, 111, 226, 0.6)),
+    url("https://tse1.mm.bing.net/th/id/OIP.QuY50cwZUCpU8hIPcb1MKwHaE7?pid=ImgDet&w=474&h=315&rs=1&o=7&rm=3 ");
+    animation: moveGradient 10s ease infinite;
+}
+
+/* ABOUT PAGE */
+#about{
+    background:
+    linear-gradient(270deg, rgba(133, 195, 219, 0.6), rgba(238, 113, 238, 0.6), rgba(131, 198, 224, 0.6)),
+    url("https://png.pngtree.com/thumb_back/fh260/background/20240426/pngtree-a-doctor-pointing-at-lumbar-vertebra-model-in-medical-office-image_15672188.jpg");
+    animation: moveGradient 8s ease infinite;
+}
+ 
+/* CONTACT PAGE*/
+#contact{
+    background:
+    linear-gradient(270deg, rgba(230, 133, 217, 0.6), rgba(146, 202, 235, 0.6), rgba(109, 203, 231, 0.6)),
+    url("https://wallpapers.com/images/hd/doctor-background-lenymxef6pkzfcjq.jpg");
+    animation: moveGradient 12s ease infinite;
+}
+/*  GET STARTED PAGE */
+#startpage{
+    background:
+    linear-gradient(270deg, rgba(133, 195, 219, 0.6), rgba(238, 113, 238, 0.6), rgba(131, 198, 224, 0.6)),
+    url("https://thumbs.dreamstime.com/b/generated-image-375156399.jpg");
+    animation: moveGradient 8s ease infinite;
+}
+/*  LOGIN PAGE */
+#loginpage{
+    background:
+    linear-gradient(270deg, rgba(133, 195, 219, 0.6), rgba(238, 113, 238, 0.6), rgba(131, 198, 224, 0.6)),
+    url("https://i.pinimg.com/736x/82/d3/93/82d393d7a95f7aeed5ca7a953fcdb900.jpg");
+    animation: moveGradient 8s ease infinite;
+}
+/*  LOGOUT PAGE */
+#logoutPage{
+    background:
+        linear-gradient(270deg, rgba(133,195,219,0.6),
+                                 rgba(238,113,238,0.6),
+                                 rgba(131,198,224,0.6)),
+        url("https://thumbs.dreamstime.com/b/heart-stethoscope-doctor-s-office-red-heart-health-symbol-blurred-background.jpg");
+
+    background-size:400% 400%, cover;
+    background-position:0% 50%, center;
+    background-repeat:no-repeat;
+    animation: moveGradient 8s ease infinite;
+
+    display:flex;
+}
+/* KEYFRAMES FOR ALL */
+@keyframes moveGradient{
+    0%{ background-position:0% 50%, center; }
+    50%{ background-position:100% 50%, center; }
+    100%{ background-position:0% 50%, center; }
+}
+
+/* FULL SCREEN FIX */
+html, body{
+    height:85%;
+    margin:0;
+}
+
+body{
+    display:flex;
+    flex-direction:column;
+    min-height:auto;
+}
+
+#home{
+    margin-top: 70px;
+    min-height:calc(100vh-80px);
+    padding:60px,60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+/* COMMON FULL SCREEN FOR ALL SECTIONS */
+#upload , #diseases, #about, #contact{
+    margin-top: 70px;
+    min-height:calc(100vh-80px);
+    padding:60px 60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    background-size:400% 400%, cover;
+    background-position:0% 50%, center;
+    background-repeat:no-repeat;
+} 
+/* 3D CARD EFFECT */
+.login-card{
+    transform-style:preserve-3d;
+    transition:transform 0.6s ease, box-shadow 0.6s ease;
+}
+.login-card:hover{
+    transform:rotateY(12deg) rotateX(5deg) scale(1.03);
+    box-shadow:0 40px 80px rgba(0,0,0,0.6);
+}
+
+/* Floating animation */
+@keyframes floatCard{
+    0%{ transform:translateY(0px); }
+    50%{ transform:translateY(-12px); }
+    100%{ transform:translateY(0px); }
+}
+.login-card{
+    animation:floatCard 5s ease-in-out infinite;
+}
+/* LOGOUT 3D EFFECT */
+.logout-card{
+    perspective:1200px;
+}
+.logout-card h1,
+.logout-card p,
+.logout-card button{
+    transform-style:preserve-3d;
+    transition:transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.logout-card:hover h1{
+    transform:translateZ(40px);
+}
+.logout-card:hover p{
+    transform:translateZ(25px);
+}
+.logout-card:hover button{
+    transform:translateZ(50px) scale(1.05);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* subtle floating */
+@keyframes floatLogout{
+    0%{ transform:translateY(0px); }
+    50%{ transform:translateY(-10px); }
+    100%{ transform:translateY(0px); }
+}
+.logout-card{
+    animation:floatLogout 6s ease-in-out infinite;
+}
+.about-section{
+    padding:70px 20px;
+    text-align:center;
+    font-family:'Poppins',sans-serif;
+    background:#fbf5f8;
+}
+
+.about-section h2{
+    font-size:32px;
+    margin-bottom:40px;
+    color:#222;
+}
+
+.about-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+}
+
+.about-card{
+    background:rgb(219, 216, 218);
+    width:280px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.about-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+.about-card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.about-card h3{
+    margin-bottom:10px;
+    color:#333;
+}
+
+.about-card p{
+    font-size:14px;
+    color:#555;
+    line-height:1.6;
+}
+.contact-section{
+    min-height:100vh;
+    padding:80px 20px;
+    text-align:center;
+    background:linear-gradient(135deg,#e0f7ff,#fce4ff);
+}
+
+.title{
+    font-size:40px;
+    font-weight:700;
+    color:#222;
+}
+
+.subtitle{
+    color:#555;
+    margin-bottom:40px;
+}
+
+.card-container{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+/* 3D Glass Card */
+.info-card{
+    width:250px;
+    padding:30px 20px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.2);
+    transition:0.4s;
+    transform-style:preserve-3d;
+}
+
+.info-card:hover{
+    transform:rotateY(10deg) rotateX(6deg) scale(1.05);
+    box-shadow:0 25px 50px rgba(0,0,0,0.3);
+}
+
+.info-card h3{
+    color:#111;
+    margin-bottom:10px;
+}
+
+.info-card p{
+    color:#333;
+    font-weight:500;
+}
+
+/* Button */
+.support-btn{
+    margin-top:40px;
+    padding:14px 35px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff4da6,#5ac8ff);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.support-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+footer{
+    margin-bottom: auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- GET STARTED PAGE -->
+<div id="startPage" style="height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;">
+    <h1>Welcome to Spinal AI Diagnosis</h1>
+    <p>Smart AI assistance for spinal disease detection</p>
+    <button onclick="openLogin()" style="padding:15px 35px;border:none;border-radius:30px;background:linear-gradient(90deg,#f42a99,#10d6e4);color:white;font-size:18px;cursor:pointer;">
+        Get Started
+    </button>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="login-page" id="loginPage"
+    style="display:none;">
+    <div class="login-card">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/011/515/295/small/chiropractic-logo-design-illustration-caring-human-backbone-pain-logo-spine-care-logo-free-vector.jpg" alt="Spine Image">
+        <h2>Doctor Login</h2>
+        <input type="text" placeholder="Username" id="user">
+        <input type="password" placeholder="Password" id="pass">
+        <button onclick="login()">Login</button>
+        <button class="popup-btn" onclick="alert('Welcome to Spinal AI Diagnosis!')">Info</button>
+    </div>
+</div>
+<!-- LOGOUT THANK YOU PAGE -->
+<div id="logoutPage" style="display:none;height:100vh;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white;">
+    
+    <h1>Thank You for Using Spinal AI Diagnosis</h1>
+    <p>You have successfully logged out.</p>
+
+    <button onclick="backToLogin()" 
+    style="margin-top:25px;padding:12px 30px;border:none;border-radius:30px;background:white;color:#f42a99;font-weight:bold;cursor:pointer;">
+        Login Again
+    </button>
+
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+
+<header>
+    <img src="https://tse3.mm.bing.net/th/id/OIP.66H0CnifSstrYko7YHB8JQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo">
+    <nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('upload')">Upload</a>
+    <a href="#" onclick="showPage('diseases')">Diseases</a>
+    <a href="#" onclick="showPage('about')">About Us</a>
+    <a href="#" onclick="showPage('contact')">Contact Us</a>
+</nav>
+</header>
+
+<section id="home">
+    <h2>AI Powered Spinal Diagnosis</h2>
+    <p>Upload MRI, X-ray, CT Scan, Audio or Video for AI-based analysis</p>
+    <div>
+        
+    </div>
+    <button class="back-btn" onclick="logout()">logout</button>
+</section>
+
+<section id="upload">
+    <h2>Upload Medical Data</h2>
+    <div class="cards">
+        <div class="upload-card">
+            <h3>X-Ray</h3>
+            <input type="file">
+            <button onclick="analyze()">Analyze</button>
+        </div>
+        <div class="upload-card">
+            <h3>CT Scan</h3>
+            <input type="file">
+            <button onclick="analyze()">Analyze</button>
+        </div>
+        <div class="upload-card">
+            <h3>MRI Scan</h3>
+            <input type="file">
+            <button onclick="analyze()">Analyze</button>
+        </div>
+        <div class="upload-card">
+            <h3>Audio/Video</h3>
+            <input type="file" accept="audio/*,video/*">
+            <button onclick="analyze()">Analyze</button>
+        </div>
+    </div>
+</section>
+
+<section id="diseases">
+    <h2>Detected Spinal Diseases</h2>
+    <div class="disease-list">
+        <div class="disease">
+            <h4>1. Herniated Disc</h4>
+            <p>Occurs when the soft center of a spinal disc pushes through a crack in the tougher exterior casing. It can irritate nearby nerves, causing pain, numbness, or weakness in limbs.</p>
+        </div>
+        <div class="disease">
+            <h4>2. Spinal Stenosis</h4>
+            <p>A narrowing of the spaces within your spine, which can put pressure on the nerves. Common symptoms include pain, tingling, and muscle weakness.</p>
+        </div>
+        <div class="disease">
+            <h4>3. Scoliosis</h4>
+            <p>A sideways curvature of the spine that occurs most often during the growth spurt before puberty. It can cause uneven shoulders and back pain.</p>
+        </div>
+        <div class="disease">
+            <h4>4. Degenerative Disc Disease</h4>
+            <p>Occurs when one or more of the discs between the vertebrae of the spinal column deteriorate or break down, leading to pain and reduced flexibility.</p>
+        </div>
+        <div class="disease">
+            <h4>5. Spondylolisthesis</h4>
+            <p>A condition in which one of the vertebrae slips out of place onto the vertebra below it, causing lower back pain and tight hamstrings.</p>
+        </div>
+        <div class="disease">
+            <h4>6. Spinal Tumor</h4>
+            <p>An abnormal growth within or surrounding the spinal cord and spinal column. Symptoms include persistent pain, weakness, and numbness.</p>
+        </div>
+        <div class="disease">
+            <h4>7. Spinal Infection</h4>
+            <p>Caused by bacteria or fungi infecting the spine, leading to fever, back pain, and fatigue. Early diagnosis is crucial for treatment.</p>
+        </div>
+        <div class="disease">
+            <h4>8. Fracture</h4>
+            <p>Breaks or cracks in the vertebrae often caused by trauma or osteoporosis. Symptoms include sudden pain and limited mobility.</p>
+        </div>
+        <div class="disease">
+            <h4>9. Osteoarthritis</h4>
+            <p>A degenerative joint disease that affects the cartilage and bones in the spine, leading to stiffness, pain, and swelling.</p>
+        </div>
+        <div class="disease">
+            <h4>10. Ankylosing Spondylitis</h4>
+            <p>A type of arthritis that causes inflammation of the spinal joints, leading to chronic pain, stiffness, and reduced flexibility.</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about-section">
+
+    <h2>About Our Platform</h2>
+
+    <div class="about-container">
+
+        <div class="about-card">
+            <img src="data:image/jpeg;base64,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" alt="Spinal Diagnosis">
+            <h3>AI Based Detection</h3>
+            <p>
+                Our system uses Artificial Intelligence to analyze spinal images
+                and help detect possible diseases quickly and accurately.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <img src="https://img.freepik.com/free-vector/online-medical-support_603843-3334.jpg" alt="Medical Support">
+            <h3>Medical Support</h3>
+            <p>
+                The platform assists doctors and patients by providing
+                early insights, reducing diagnosis time and improving care.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <img src="https://www.bestassignmentwriters.co.uk/blog/wp-content/uploads/2020/01/6-main-types-of-report-writing.jpg" alt="Fast Results">
+            <h3>Fast Results</h3>
+            <p>
+                Upload scans and receive AI-based analysis within seconds,
+                helping in faster treatment decisions.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="contact" class="contact-section">
+    <h1 class="title">Get in Touch</h1>
+    <p class="subtitle">Have questions about the system or need technical help?</p>
+
+    <div class="card-container">
+
+        <div class="info-card">
+            <h3>Email</h3>
+            <p>helpdesk@spinalai.org</p>
+        </div>
+
+        <div class="info-card">
+            <h3>Support Line</h3>
+            <p>+91 98765 43210</p>
+        </div>
+
+        <div class="info-card">
+            <h3>Working Hours</h3>
+            <p>Mon – Sat, 9 AM – 6 PM</p>
+        </div>
+
+    </div>
+
+<div id="logoutPage" class="logout-card" style="display:none;height:100vh;justify-content:center;align-items:center;flex-direction:column;text-align:center;background:linear-gradient(135deg,#f42a99,#10d6e4);color:white;"></div>
+
+    <button onclick="requestSupport()" 
+    style="margin-top:25px;padding:12px 25px;border:none;border-radius:25px;background:linear-gradient(90deg,#10d6e4,#f42a99);color:white;cursor:pointer;">
+    Request support
+    </button>
+</section>
+
+
+<footer>
+    <p>© 2026 Spinal AI Diagnosis | All Rights Reserved</p>
+</footer>
+<section>
+    <display:none>
+</section>
+
+</div>
+
+<script>
+
+function openLogin(){
+    document.getElementById("startPage").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+}
+function login(){
+    let u=document.getElementById("user").value;
+    let p=document.getElementById("pass").value;
+    if(u===""||p===""){
+        alert("Enter login details");
+    }else{
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("mainContent").style.display="block";
+    }
+}
+function analyze(){
+    alert("3D Deep Learning Analysis in Progress...");
+}
+function goBackLogin(){
+    document.getElementById("mainContent").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+}
+
+function showPage(id){
+    let pages=document.querySelectorAll("section");
+    pages.forEach(p=>p.style.display="none");
+    document.getElementById(id).style.display="block";
+}
+function logout(){
+    document.getElementById("mainContent").style.display="none";
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("logoutPage").style.display="flex";
+}
+function requestSupport(){
+    alert("Support request sent!");
+}
+function backToLogin(){
+    document.getElementById("logoutPage").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+}
+showPage("home");
+</script>
+
+</body>
+</html>
